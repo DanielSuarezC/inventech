@@ -38,7 +38,7 @@
         >
           <p class="font-medium text-brand-navy dark:text-white">{{ product.name }}</p>
           <p class="text-sm text-brand-gray dark:text-white/60">$ {{ product.sale_price | number: '1.0-0' }} COP</p>
-          <p class="mt-1 text-xs" [class.text-red-600]="product.track_inventory && product.stock <= 0" [class.text-brand-gray]="!(product.track_inventory && product.stock <= 0)" [class.dark:text-red-400]="product.track_inventory && product.stock <= 0" [class.dark:text-white/60]="!(product.track_inventory && product.stock <= 0)">
+          <p class="mt-1 text-xs" [ngClass]="{'text-red-600 dark:text-red-400': product.track_inventory && product.stock <= 0, 'text-brand-gray dark:text-white/60': !(product.track_inventory && product.stock <= 0)}">
             {{ product.track_inventory ? 'Stock: ' + product.stock : 'Sin control de stock' }}
           </p>
         </button>
@@ -56,10 +56,10 @@
       ></ui-empty-state>
 
       <ul *ngIf="cart().length > 0" class="mt-4 space-y-3">
-        <li *ngFor="let line of cart()" class="flex items-center justify-between gap-2 border-b border-brand-navy/10 pb-3">
+        <li *ngFor="let line of cart()" class="flex items-center justify-between gap-2 border-b border-brand-navy/10 pb-3 dark:border-white/10">
           <div class="min-w-0">
-            <p class="truncate text-sm font-medium text-brand-navy">{{ line.name }}</p>
-            <p class="text-xs text-brand-gray">$ {{ line.unit_price | number: '1.0-0' }} c/u</p>
+            <p class="truncate text-sm font-medium text-brand-navy dark:text-white">{{ line.name }}</p>
+            <p class="text-xs text-brand-gray dark:text-white/60">$ {{ line.unit_price | number: '1.0-0' }} c/u</p>
           </div>
           <div class="flex items-center gap-2">
             <input
@@ -67,7 +67,7 @@
               min="1"
               [ngModel]="line.quantity"
               (ngModelChange)="updateQuantity(line.product_id, +$event)"
-              class="w-16 rounded-control border border-brand-navy/20 px-2 py-1 text-center text-sm"
+              class="w-16 rounded-control border border-brand-navy/20 bg-white px-2 py-1 text-center text-sm text-brand-navy dark:border-white/20 dark:bg-brand-navy/40 dark:text-white"
             />
             <button type="button" class="text-xs text-red-600 hover:underline" (click)="removeLine(line.product_id)">Quitar</button>
           </div>
@@ -75,20 +75,20 @@
       </ul>
 
       <div class="mt-4">
-        <label for="payment-method" class="block text-sm font-medium text-brand-navy">Medio de pago</label>
+        <label for="payment-method" class="block text-sm font-medium text-brand-navy dark:text-white">Medio de pago</label>
         <select
           id="payment-method"
           [ngModel]="paymentMethod()"
           (ngModelChange)="paymentMethod.set($event)"
-          class="mt-1 w-full rounded-control border border-brand-navy/20 px-3 py-2 text-sm focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
+          class="mt-1 w-full rounded-control border border-brand-navy/20 bg-white px-3 py-2 text-sm text-brand-navy focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue dark:border-white/20 dark:bg-brand-navy/40 dark:text-white"
         >
           <option *ngFor="let method of paymentMethods" [value]="method">{{ method }}</option>
         </select>
       </div>
 
-      <div class="mt-4 flex items-baseline justify-between border-t border-brand-navy/10 pt-4">
-        <span class="text-sm text-brand-gray">Total</span>
-        <span class="font-heading text-xl font-bold text-brand-navy">$ {{ total | number: '1.0-0' }} COP</span>
+      <div class="mt-4 flex items-baseline justify-between border-t border-brand-navy/10 pt-4 dark:border-white/10">
+        <span class="text-sm text-brand-gray dark:text-white/60">Total</span>
+        <span class="font-heading text-xl font-bold text-brand-navy dark:text-white">$ {{ total | number: '1.0-0' }} COP</span>
       </div>
 
       <ui-button class="mt-4 block w-full" [disabled]="cart().length === 0" [loading]="processing()" (click)="confirmSale()">
