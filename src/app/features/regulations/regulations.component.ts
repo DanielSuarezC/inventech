@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { RegulationsService } from '../../core/services/regulations.service';
 import { RegulationDocument } from '../../core/models/regulation-document.model';
 import { LoadingComponent } from '../../shared/ui/loading/loading.component';
@@ -21,22 +20,24 @@ export class RegulationsComponent implements OnInit {
   readonly documents = signal<RegulationDocument[]>([]);
   readonly search = signal('');
   readonly categoryFilter = signal('');
-  readonly selected = signal<RegulationDocument | null>(null);
 
-  readonly categories = computed(() => Array.from(new Set(this.documents().map((d) => d.category))));
+  readonly categories = computed(() =>
+    Array.from(new Set(this.published().map((d) => d.category)))
+  );
+
+  readonly published = computed(() =>
+    this.documents().filter((doc) => doc.status === 'publicado')
+  );
 
   readonly filtered = computed(() =>
-    this.documents().filter((doc) => {
+    this.published().filter((doc) => {
       const matchesSearch = doc.title.toLowerCase().includes(this.search().toLowerCase());
       const matchesCategory = !this.categoryFilter() || doc.category === this.categoryFilter();
       return matchesSearch && matchesCategory;
     })
   );
 
-  constructor(
-    private readonly regulationsService: RegulationsService,
-    private readonly sanitizer: DomSanitizer
-  ) {}
+  constructor(private readonly regulationsService: RegulationsService) {}
 
   ngOnInit(): void {
     this.load();
@@ -56,13 +57,5 @@ export class RegulationsComponent implements OnInit {
     } finally {
       this.loading.set(false);
     }
-  }
-
-  select(document: RegulationDocument): void {
-    this.selected.set(document);
-  }
-
-  safeUrl(url: string): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }
