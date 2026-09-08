@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, signal } from '@angular/core';
 import { SlideBlock } from '../../../core/models/presentation.model';
 import { AvatarComponent } from '../../../shared/ui/avatar/avatar.component';
 
@@ -11,4 +11,19 @@ import { AvatarComponent } from '../../../shared/ui/avatar/avatar.component';
 })
 export class SlideBlocksComponent {
   @Input({ required: true }) blocks: SlideBlock[] = [];
+  readonly expandedAccordions = signal<Set<string>>(new Set());
+
+  toggleAccordion(id: string): void {
+    const expanded = new Set(this.expandedAccordions());
+    if (expanded.has(id)) {
+      expanded.delete(id);
+    } else {
+      expanded.add(id);
+    }
+    this.expandedAccordions.set(expanded);
+  }
+
+  isAccordionExpanded(id: string): boolean {
+    return this.expandedAccordions().has(id);
+  }
 }

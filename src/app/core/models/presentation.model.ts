@@ -1,4 +1,4 @@
-export type SlideBlockType = 'text' | 'cards' | 'list' | 'table' | 'swot' | 'orgchart' | 'stats';
+export type SlideBlockType = 'text' | 'cards' | 'list' | 'table' | 'swot' | 'orgchart' | 'stats' | 'gallery' | 'accordion';
 
 export interface SlideBlock {
   type: SlideBlockType;

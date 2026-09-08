@@ -11,6 +11,7 @@ export interface CatalogProduct {
   dependsOn?: string;
   standalone: boolean;
   installationIncluded: true;
+  image?: string;
 }
 
 export interface Category {

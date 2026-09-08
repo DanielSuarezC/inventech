@@ -27,9 +27,24 @@ export const COMPANY_PRESENTATION_SLIDES: PresentationSlide[] = [
     subtitle: COMPANY_SLOGAN,
     blocks: [
       {
+        type: 'gallery',
+        content: [
+          {
+            title: 'InvenTech POS Cloud',
+            subtitle: 'Punto de venta e inventario en la nube',
+            image: 'assets/inventechpos.jpg',
+          },
+          {
+            title: 'InvenTech ScanPro IoT',
+            subtitle: 'Lector inteligente conectado',
+            image: 'assets/inventechscan.jpg',
+          },
+        ],
+      },
+      {
         type: 'text',
         content: [
-          'Taller de Creación de Empresa — SENA. Presentación ejecutiva interactiva de la identidad y conformación de INVENTECH S.A.S.',
+          'Taller de Creación de Empresa — SENA. Presentación ejecutiva interactiva de la identidad y conformación de INVENTECH S.A.S., soluciones tecnológicas integrales para la gestión de inventarios y puntos de venta en pequeñas y medianas empresas.',
         ],
       },
     ],
@@ -108,27 +123,34 @@ export const COMPANY_PRESENTATION_SLIDES: PresentationSlide[] = [
     ],
   },
   {
-    id: 'mision',
+    id: 'mision-vision',
     index: 6,
-    title: 'Misión',
-    blocks: [{ type: 'text', content: paragraphs(MISSION) }],
-  },
-  {
-    id: 'vision',
-    index: 7,
-    title: 'Visión',
-    subtitle: 'Horizonte 2030',
-    blocks: [{ type: 'text', content: paragraphs(VISION) }],
+    title: 'Misión y Visión corporativa',
+    blocks: [
+      {
+        type: 'accordion',
+        content: [
+          {
+            title: '🎯 Misión',
+            content: paragraphs(MISSION),
+          },
+          {
+            title: '🔮 Visión 2030',
+            content: paragraphs(VISION),
+          },
+        ],
+      },
+    ],
   },
   {
     id: 'objetivos',
-    index: 8,
+    index: 7,
     title: 'Objetivos corporativos',
     blocks: [{ type: 'list', content: OBJECTIVES }],
   },
   {
     id: 'valores',
-    index: 9,
+    index: 8,
     title: 'Valores corporativos',
     blocks: [
       {
@@ -139,7 +161,7 @@ export const COMPANY_PRESENTATION_SLIDES: PresentationSlide[] = [
   },
   {
     id: 'dofa',
-    index: 10,
+    index: 9,
     title: 'Matriz DOFA',
     blocks: [
       {
@@ -155,7 +177,7 @@ export const COMPANY_PRESENTATION_SLIDES: PresentationSlide[] = [
   },
   {
     id: 'organigrama',
-    index: 11,
+    index: 10,
     title: 'Estructura organizacional',
     subtitle: 'Asamblea de Accionistas → Gerencia General → 3 áreas',
     blocks: [
@@ -172,21 +194,22 @@ export const COMPANY_PRESENTATION_SLIDES: PresentationSlide[] = [
   },
   {
     id: 'portafolio',
-    index: 12,
+    index: 11,
     title: 'Portafolio de productos y servicios',
     blocks: [
       {
-        type: 'cards',
+        type: 'gallery',
         content: CATALOG_PRODUCTS.map((p) => ({
-          title: `${p.name} — ${p.referencePrice}${p.priceUnit}`,
-          description: p.description,
+          title: p.name,
+          subtitle: `${p.referencePrice}${p.priceUnit} — ${p.description}`,
+          image: p.image || 'assets/isotipo.png',
         })),
       },
     ],
   },
   {
     id: 'info-complementaria',
-    index: 13,
+    index: 12,
     title: 'Información complementaria',
     blocks: [
       {

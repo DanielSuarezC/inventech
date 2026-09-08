@@ -21,6 +21,7 @@ export const CATALOG_PRODUCTS: CatalogProduct[] = [
     ],
     standalone: true,
     installationIncluded: true,
+    image: 'assets/inventechpos.jpg',
   },
   {
     id: 'scanpro-iot',
@@ -40,6 +41,7 @@ export const CATALOG_PRODUCTS: CatalogProduct[] = [
     dependsOn: 'pos-cloud',
     standalone: false,
     installationIncluded: true,
+    image: 'assets/inventechscan.jpg',
   },
 ];
 

@@ -1,42 +1,52 @@
-<section class="bg-brand-navy text-white">
-  <div class="mx-auto max-w-5xl px-4 py-16 text-center sm:px-6 lg:px-8">
-    <p class="font-heading text-sm font-semibold uppercase tracking-widest text-brand-green">INVENTECH S.A.S.</p>
-    <h1 class="mt-3 font-heading text-3xl font-bold sm:text-4xl">Identidad y conformación empresarial</h1>
-    <p class="mt-3 italic text-white/70">{{ slogan }}</p>
+<section class="relative overflow-hidden bg-gradient-to-br from-brand-navy via-brand-navy to-brand-blue text-white">
+  <!-- Decorative elements -->
+  <div class="absolute top-0 right-0 h-96 w-96 rounded-full bg-brand-green/10 blur-3xl -mr-48 -mt-48"></div>
+  <div class="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-brand-blue/10 blur-3xl -ml-48 -mb-48"></div>
 
-    <div class="mt-8 inline-flex rounded-control border border-white/20 bg-white/5 p-1">
-      <button
-        type="button"
-        class="rounded-control px-4 py-2 text-sm font-medium transition-colors"
-        [class.bg-white]="viewMode() === 'presentacion'"
-        [class.text-brand-navy]="viewMode() === 'presentacion'"
-        [class.text-white]="viewMode() !== 'presentacion'"
-        (click)="setViewMode('presentacion')"
-      >
-        Modo presentación
+  <div class="relative mx-auto max-w-5xl px-4 py-16 text-center sm:px-6 lg:px-8">
+    <div class="mb-6 inline-block">
+      <span class="inline-block rounded-full bg-brand-green/20 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-brand-green">INVENTECH S.A.S.</span>
+    </div>
+
+    <h1 class="font-heading text-4xl font-bold sm:text-5xl lg:text-6xl">
+      <span class="bg-gradient-to-r from-white via-brand-green to-white bg-clip-text text-transparent">
+        Identidad corporativa
+      </span>
+    </h1>
+
+    <p class="mt-4 text-lg italic text-white/80">{{ slogan }}</p>
+    <div class="mt-2 h-1 w-24 bg-gradient-to-r from-brand-green to-brand-blue mx-auto rounded-full"></div>
+
+    <div class="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
+      <button (click)="setViewMode('presentacion')" [ngClass]="{ 'bg-white text-brand-navy shadow-lg shadow-white/20': viewMode() === 'presentacion', 'border border-white/30 text-white hover:border-white/60 hover:bg-white/10': viewMode() !== 'presentacion' }" class="group inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-bold uppercase tracking-wide transition-all">
+        <span>▶</span> Modo presentación
       </button>
-      <button
-        type="button"
-        class="rounded-control px-4 py-2 text-sm font-medium transition-colors"
-        [class.bg-white]="viewMode() === 'documento'"
-        [class.text-brand-navy]="viewMode() === 'documento'"
-        [class.text-white]="viewMode() !== 'documento'"
-        (click)="setViewMode('documento')"
-      >
-        Documento completo
+      <button (click)="setViewMode('documento')" [ngClass]="{ 'bg-white text-brand-navy shadow-lg shadow-white/20': viewMode() === 'documento', 'border border-white/30 text-white hover:border-white/60 hover:bg-white/10': viewMode() !== 'documento' }" class="group inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-bold uppercase tracking-wide transition-all">
+        <span>📄</span> Documento completo
       </button>
     </div>
   </div>
 </section>
 
-<section *ngIf="viewMode() === 'presentacion'" class="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+<section *ngIf="viewMode() === 'presentacion'" class="min-h-screen bg-white dark:bg-[#0b1f33]">
   <app-presentation-engine [slides]="slides"></app-presentation-engine>
 </section>
 
-<section *ngIf="viewMode() === 'documento'" class="mx-auto max-w-4xl space-y-16 px-4 py-12 sm:px-6 lg:px-8">
-  <article *ngFor="let slide of slides" [id]="slide.id">
-    <p *ngIf="slide.subtitle" class="mb-1 text-sm font-medium uppercase tracking-wide text-brand-blue">{{ slide.subtitle }}</p>
-    <h2 class="mb-6 font-heading text-2xl font-semibold text-brand-navy dark:text-white">{{ slide.title }}</h2>
-    <app-slide-blocks [blocks]="slide.blocks"></app-slide-blocks>
-  </article>
+<section *ngIf="viewMode() === 'documento'" class="bg-gradient-to-b from-white to-gray-50 dark:from-[#0b1f33] dark:to-[#0d2438] py-16">
+  <div class="mx-auto max-w-4xl space-y-20 px-4 sm:px-6 lg:px-8">
+    <article *ngFor="let slide of slides; let i = index" [id]="slide.id" class="scroll-mt-20 animate-in fade-in duration-300">
+      <div class="mb-8 flex items-center gap-4">
+        <div class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-brand-blue to-brand-green text-sm font-bold text-white">
+          {{ i + 1 }}
+        </div>
+        <div class="flex-1">
+          <p *ngIf="slide.subtitle" class="text-xs font-bold uppercase tracking-widest text-brand-blue dark:text-brand-green">{{ slide.subtitle }}</p>
+          <h2 class="font-heading text-3xl font-bold text-brand-navy dark:text-white">{{ slide.title }}</h2>
+        </div>
+      </div>
+      <div class="rounded-xl border border-brand-navy/10 bg-white p-8 shadow-sm dark:border-white/10 dark:bg-white/5">
+        <app-slide-blocks [blocks]="slide.blocks"></app-slide-blocks>
+      </div>
+    </article>
+  </div>
 </section>
