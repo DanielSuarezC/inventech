@@ -1,0 +1,99 @@
+<section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+  <h1 class="font-heading text-2xl font-bold text-brand-navy">Punto de venta</h1>
+  <p class="text-sm text-brand-gray">InvenTech POS Cloud — registra ventas y descuenta stock en tiempo real.</p>
+
+  <ui-alert *ngIf="errorMessage()" tone="danger" class="mt-4 block">{{ errorMessage() }}</ui-alert>
+  <ui-alert *ngIf="successMessage()" tone="success" class="mt-4 block">{{ successMessage() }}</ui-alert>
+
+  <div class="mt-6 grid gap-6 lg:grid-cols-3">
+    <div class="lg:col-span-2">
+      <div class="flex gap-3">
+        <input
+          type="search"
+          [ngModel]="search()"
+          (ngModelChange)="search.set($event)"
+          (keyup.enter)="loadProducts()"
+          placeholder="Buscar producto por nombre o SKU..."
+          class="w-full rounded-control border border-brand-navy/20 px-3 py-2 text-sm focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
+        />
+        <ui-button variant="ghost" (click)="loadProducts()">Buscar</ui-button>
+      </div>
+
+      <ui-loading *ngIf="loading()" label="Cargando catálogo..."></ui-loading>
+
+      <ui-empty-state
+        *ngIf="!loading() && products().length === 0"
+        title="Sin productos"
+        description="Registra productos en Inventario antes de vender."
+        class="mt-6 block"
+      ></ui-empty-state>
+
+      <div *ngIf="!loading()" class="mt-4 grid gap-3 sm:grid-cols-2">
+        <button
+          *ngFor="let product of products()"
+          type="button"
+          (click)="addToCart(product)"
+          [disabled]="product.track_inventory && product.stock <= 0"
+          class="rounded-card border border-brand-navy/10 bg-white p-4 text-left shadow-card transition-shadow hover:shadow-elevated disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <p class="font-medium text-brand-navy">{{ product.name }}</p>
+          <p class="text-sm text-brand-gray">$ {{ product.sale_price | number: '1.0-0' }} COP</p>
+          <p class="mt-1 text-xs" [class.text-red-600]="product.track_inventory && product.stock <= 0" [class.text-brand-gray]="!(product.track_inventory && product.stock <= 0)">
+            {{ product.track_inventory ? 'Stock: ' + product.stock : 'Sin control de stock' }}
+          </p>
+        </button>
+      </div>
+    </div>
+
+    <ui-card class="h-fit lg:sticky lg:top-20">
+      <h2 class="font-heading text-lg font-semibold text-brand-navy">Carrito</h2>
+
+      <ui-empty-state
+        *ngIf="cart().length === 0"
+        title="Carrito vacío"
+        description="Selecciona productos del catálogo para agregarlos."
+        class="mt-4 block"
+      ></ui-empty-state>
+
+      <ul *ngIf="cart().length > 0" class="mt-4 space-y-3">
+        <li *ngFor="let line of cart()" class="flex items-center justify-between gap-2 border-b border-brand-navy/10 pb-3">
+          <div class="min-w-0">
+            <p class="truncate text-sm font-medium text-brand-navy">{{ line.name }}</p>
+            <p class="text-xs text-brand-gray">$ {{ line.unit_price | number: '1.0-0' }} c/u</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <input
+              type="number"
+              min="1"
+              [ngModel]="line.quantity"
+              (ngModelChange)="updateQuantity(line.product_id, +$event)"
+              class="w-16 rounded-control border border-brand-navy/20 px-2 py-1 text-center text-sm"
+            />
+            <button type="button" class="text-xs text-red-600 hover:underline" (click)="removeLine(line.product_id)">Quitar</button>
+          </div>
+        </li>
+      </ul>
+
+      <div class="mt-4">
+        <label for="payment-method" class="block text-sm font-medium text-brand-navy">Medio de pago</label>
+        <select
+          id="payment-method"
+          [ngModel]="paymentMethod()"
+          (ngModelChange)="paymentMethod.set($event)"
+          class="mt-1 w-full rounded-control border border-brand-navy/20 px-3 py-2 text-sm focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
+        >
+          <option *ngFor="let method of paymentMethods" [value]="method">{{ method }}</option>
+        </select>
+      </div>
+
+      <div class="mt-4 flex items-baseline justify-between border-t border-brand-navy/10 pt-4">
+        <span class="text-sm text-brand-gray">Total</span>
+        <span class="font-heading text-xl font-bold text-brand-navy">$ {{ total | number: '1.0-0' }} COP</span>
+      </div>
+
+      <ui-button class="mt-4 block w-full" [disabled]="cart().length === 0" [loading]="processing()" (click)="confirmSale()">
+        <span class="w-full">Confirmar venta</span>
+      </ui-button>
+    </ui-card>
+  </div>
+</section>

@@ -1,0 +1,102 @@
+<section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <div>
+      <h1 class="font-heading text-2xl font-bold text-brand-navy">Inventario</h1>
+      <p class="text-sm text-brand-gray">Productos, categorías, stock y alertas — InvenTech POS Cloud.</p>
+    </div>
+    <ui-button (click)="openCreateForm()">+ Nuevo producto</ui-button>
+  </div>
+
+  <ui-alert *ngIf="errorMessage()" tone="danger" class="mt-4 block">{{ errorMessage() }}</ui-alert>
+
+  <div class="mt-6 flex gap-3">
+    <input
+      type="search"
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event)"
+      (keyup.enter)="loadAll()"
+      placeholder="Buscar por nombre o SKU..."
+      class="w-full max-w-sm rounded-control border border-brand-navy/20 px-3 py-2 text-sm focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
+    />
+    <ui-button variant="ghost" (click)="loadAll()">Buscar</ui-button>
+  </div>
+
+  <!-- Formulario de producto -->
+  <ui-card *ngIf="formOpen()" class="mt-6 block">
+    <h2 class="font-heading text-lg font-semibold text-brand-navy">
+      {{ editingId() ? 'Editar producto' : 'Nuevo producto' }}
+    </h2>
+    <form [formGroup]="form" (ngSubmit)="submit()" class="mt-4 grid gap-4 sm:grid-cols-2" novalidate>
+      <ui-input label="Nombre" formControlName="name" [error]="form.controls.name.touched && form.controls.name.invalid ? 'El nombre es obligatorio.' : ''"></ui-input>
+      <ui-input label="SKU / código de barras" formControlName="sku" hint="Usado por el lector de códigos."></ui-input>
+
+      <div class="space-y-1">
+        <label for="category" class="block text-sm font-medium text-brand-navy">Categoría</label>
+        <select id="category" formControlName="categoryId" class="w-full rounded-control border border-brand-navy/20 px-3 py-2 text-sm focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue">
+          <option value="">Sin categoría</option>
+          <option *ngFor="let category of categories()" [value]="category.id">{{ category.name }}</option>
+        </select>
+      </div>
+
+      <div class="flex items-center gap-2 pt-6">
+        <input id="trackInventory" type="checkbox" formControlName="trackInventory" class="h-4 w-4 rounded border-brand-navy/30 text-brand-blue focus:ring-brand-blue" />
+        <label for="trackInventory" class="text-sm text-brand-navy">Rastrear inventario</label>
+      </div>
+
+      <ui-input label="Precio de costo" type="number" formControlName="costPrice"></ui-input>
+      <ui-input label="Precio de venta" type="number" formControlName="salePrice"></ui-input>
+      <ui-input label="Stock inicial" type="number" formControlName="stock"></ui-input>
+      <ui-input label="Stock mínimo" type="number" formControlName="minStock"></ui-input>
+
+      <div class="flex gap-3 sm:col-span-2">
+        <ui-button type="submit" [loading]="saving()">Guardar</ui-button>
+        <ui-button type="button" variant="ghost" (click)="closeForm()">Cancelar</ui-button>
+      </div>
+    </form>
+  </ui-card>
+
+  <ui-loading *ngIf="loading()" label="Cargando inventario..."></ui-loading>
+
+  <ui-empty-state
+    *ngIf="!loading() && products().length === 0"
+    title="Sin productos"
+    description="Aún no hay productos registrados en tu inventario. Crea el primero para empezar."
+    class="mt-6 block"
+  ></ui-empty-state>
+
+  <div *ngIf="!loading() && products().length > 0" class="mt-6 overflow-x-auto rounded-card border border-brand-navy/10 bg-white shadow-card">
+    <table class="min-w-full divide-y divide-brand-navy/10 text-sm">
+      <thead class="bg-brand-navy/[0.03]">
+        <tr>
+          <th class="px-4 py-3 text-left font-heading font-semibold text-brand-navy">Producto</th>
+          <th class="px-4 py-3 text-left font-heading font-semibold text-brand-navy">Categoría</th>
+          <th class="px-4 py-3 text-left font-heading font-semibold text-brand-navy">Precio venta</th>
+          <th class="px-4 py-3 text-left font-heading font-semibold text-brand-navy">Stock</th>
+          <th class="px-4 py-3 text-left font-heading font-semibold text-brand-navy">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-brand-navy/10">
+        <tr *ngFor="let product of products()">
+          <td class="px-4 py-3">
+            <p class="font-medium text-brand-navy">{{ product.name }}</p>
+            <p *ngIf="product.sku" class="text-xs text-brand-gray">SKU: {{ product.sku }}</p>
+          </td>
+          <td class="px-4 py-3 text-brand-navy/90">{{ categoryName(product.category_id) }}</td>
+          <td class="px-4 py-3 text-brand-navy/90">$ {{ product.sale_price | number: '1.0-0' }} COP</td>
+          <td class="px-4 py-3">
+            <span class="font-medium text-brand-navy">{{ product.track_inventory ? product.stock : '—' }}</span>
+            <ui-badge *ngIf="isLowStock(product)" tone="warning" class="ml-2">Stock bajo</ui-badge>
+          </td>
+          <td class="px-4 py-3">
+            <div class="flex flex-wrap gap-2">
+              <button type="button" class="text-brand-blue hover:underline" (click)="openEditForm(product)">Editar</button>
+              <button *ngIf="product.track_inventory" type="button" class="text-brand-green hover:underline" (click)="adjustStock(product, 'in')">+ Stock</button>
+              <button *ngIf="product.track_inventory" type="button" class="text-amber-600 hover:underline" (click)="adjustStock(product, 'out')">- Stock</button>
+              <button type="button" class="text-red-600 hover:underline" (click)="removeProduct(product)">Eliminar</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

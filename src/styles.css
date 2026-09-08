@@ -1,1 +1,38 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-brand-blue: #0a8fe0;
+  --color-brand-green: #3cae43;
+  --color-navy: #0b1f33;
+  --color-gray: #5b6472;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply font-body text-brand-navy antialiased;
+  background-color: #f7f9fb;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  @apply font-heading;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

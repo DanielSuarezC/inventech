@@ -1,0 +1,42 @@
+<section class="bg-brand-navy text-white">
+  <div class="mx-auto max-w-5xl px-4 py-16 text-center sm:px-6 lg:px-8">
+    <p class="font-heading text-sm font-semibold uppercase tracking-widest text-brand-green">INVENTECH S.A.S.</p>
+    <h1 class="mt-3 font-heading text-3xl font-bold sm:text-4xl">Identidad y conformación empresarial</h1>
+    <p class="mt-3 italic text-white/70">{{ slogan }}</p>
+
+    <div class="mt-8 inline-flex rounded-control border border-white/20 bg-white/5 p-1">
+      <button
+        type="button"
+        class="rounded-control px-4 py-2 text-sm font-medium transition-colors"
+        [class.bg-white]="viewMode() === 'presentacion'"
+        [class.text-brand-navy]="viewMode() === 'presentacion'"
+        [class.text-white]="viewMode() !== 'presentacion'"
+        (click)="setViewMode('presentacion')"
+      >
+        Modo presentación
+      </button>
+      <button
+        type="button"
+        class="rounded-control px-4 py-2 text-sm font-medium transition-colors"
+        [class.bg-white]="viewMode() === 'documento'"
+        [class.text-brand-navy]="viewMode() === 'documento'"
+        [class.text-white]="viewMode() !== 'documento'"
+        (click)="setViewMode('documento')"
+      >
+        Documento completo
+      </button>
+    </div>
+  </div>
+</section>
+
+<section *ngIf="viewMode() === 'presentacion'" class="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+  <app-presentation-engine [slides]="slides"></app-presentation-engine>
+</section>
+
+<section *ngIf="viewMode() === 'documento'" class="mx-auto max-w-4xl space-y-16 px-4 py-12 sm:px-6 lg:px-8">
+  <article *ngFor="let slide of slides" [id]="slide.id">
+    <p *ngIf="slide.subtitle" class="mb-1 text-sm font-medium uppercase tracking-wide text-brand-blue">{{ slide.subtitle }}</p>
+    <h2 class="mb-6 font-heading text-2xl font-semibold text-brand-navy">{{ slide.title }}</h2>
+    <app-slide-blocks [blocks]="slide.blocks"></app-slide-blocks>
+  </article>
+</section>

@@ -1,0 +1,38 @@
+<footer class="border-t border-brand-navy/10 bg-brand-navy text-white/80">
+  <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <div class="grid gap-8 md:grid-cols-4">
+      <div class="md:col-span-2">
+        <app-logo size="lg"></app-logo>
+        <p class="mt-3 max-w-sm text-sm italic text-white/70">{{ slogan }}</p>
+        <p class="mt-4 max-w-sm text-sm text-white/60">
+          INVENTECH S.A.S. — Montería, Córdoba, Colombia. Soluciones tecnológicas de
+          inventario, punto de venta y lectura de códigos de barras para pymes.
+        </p>
+      </div>
+
+      <div>
+        <h3 class="font-heading text-sm font-semibold uppercase tracking-wide text-white">Ecosistema</h3>
+        <ul class="mt-3 space-y-2 text-sm">
+          <li><a routerLink="/inventech" class="hover:text-white">InvenTech</a></li>
+          <li><a routerLink="/productos" class="hover:text-white">Productos y servicios</a></li>
+          <li><a routerLink="/aplicativos" class="hover:text-white">Aplicativos</a></li>
+          <li><a routerLink="/normatividad" class="hover:text-white">Normatividad</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-heading text-sm font-semibold uppercase tracking-wide text-white">Acceso</h3>
+        <ul class="mt-3 space-y-2 text-sm">
+          <li><a routerLink="/acceso/login" class="hover:text-white">Iniciar sesión</a></li>
+          <li><a routerLink="/acceso/registro" class="hover:text-white">Crear cuenta</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-8 border-t border-white/10 pt-6 text-xs text-white/50">
+      © {{ year }} INVENTECH S.A.S. Empresa ficticia desarrollada con fines
+      académicos (Taller de Creación de Empresa — SENA). NIT y datos legales
+      son ficticios.
+    </div>
+  </div>
+</footer>

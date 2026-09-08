@@ -1,27 +1,88 @@
-# Inventech
+# INVENTECH S.A.S. — Plataforma web
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.17.
+Sitio corporativo, presentación empresarial interactiva, catálogo de
+productos y plataforma SaaS sintética (inventario, punto de venta y lector de
+códigos de barras) de INVENTECH S.A.S.
 
-## Development server
+Empresa ficticia desarrollada con fines académicos (Taller de Creación de
+Empresa — SENA). Stack: Angular 17 (standalone components), TypeScript
+estricto, Tailwind CSS y Supabase (Auth, PostgreSQL, RLS).
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Documentación del proyecto
 
-## Code scaffolding
+- [`docs/requirements-matrix.md`](docs/requirements-matrix.md) — trazabilidad requisito → implementación.
+- [`docs/architecture.md`](docs/architecture.md) — arquitectura técnica y modelo de datos.
+- [`docs/design-system.md`](docs/design-system.md) — tokens de marca y componentes UI.
+- [`docs/implementation-plan.md`](docs/implementation-plan.md) — fases y estado del proyecto.
+- [`docs/decisions.md`](docs/decisions.md) — conflictos entre documentos fuente y cómo se resolvieron.
+- [`docs/security.md`](docs/security.md) — modelo de seguridad y RLS.
+- [`docs/testing.md`](docs/testing.md) — casos de prueba y estado de la suite.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Requisitos
 
-## Build
+- Node.js 18+ (probado con Node 24; ver advertencia de compatibilidad del CLI).
+- Una cuenta y proyecto en [Supabase](https://supabase.com) (gratis) para
+  Auth/Inventario/POS/Scanner/Normatividad.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Puesta en marcha
 
-## Running unit tests
+```bash
+npm install
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### 1. Configurar Supabase
 
-## Running end-to-end tests
+1. Crea un proyecto en Supabase.
+2. En el **SQL Editor**, ejecuta el contenido completo de
+   [`supabase/schema.sql`](supabase/schema.sql) (tablas, RLS y funciones RPC).
+3. Copia la **Project URL** y la **anon public key** desde
+   *Project Settings → API*.
+4. Pégalas en `src/environments/environment.development.ts` (desarrollo) y
+   `src/environments/environment.ts` (producción):
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```ts
+export const environment = {
+  production: false,
+  supabaseUrl: 'https://TU-PROYECTO.supabase.co',
+  supabaseAnonKey: 'TU-ANON-KEY',
+};
+```
 
-## Further help
+> La `anon key` es segura de exponer en el frontend porque todas las tablas
+> tienen Row Level Security activo (ver `docs/security.md`). **Nunca** uses la
+> `service_role key` en el frontend.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### 2. Ejecutar en desarrollo
+
+```bash
+npm start
+```
+
+Navega a `http://localhost:4200/`.
+
+### 3. Build de producción
+
+```bash
+npm run build
+```
+
+Los artefactos quedan en `dist/inventech`.
+
+### 4. Pruebas
+
+```bash
+npm test -- --watch=false --browsers=ChromeHeadless
+```
+
+## Estructura del proyecto
+
+Ver [`docs/architecture.md`](docs/architecture.md) para el detalle completo de
+`src/app/core`, `src/app/shared`, `src/app/layout` y `src/app/features`.
+
+## Alcance del prototipo
+
+Este es un prototipo académico/SaaS sintético de un solo tenant lógico por
+usuario autenticado (cada usuario ve únicamente su propio inventario y sus
+propias ventas), no un sistema multi-empresa real. Ver
+[`docs/decisions.md`](docs/decisions.md) para las decisiones e interpretaciones
+tomadas cuando los documentos fuente requerían aclaración.

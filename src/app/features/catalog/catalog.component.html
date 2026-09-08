@@ -1,0 +1,60 @@
+<section class="bg-brand-navy text-white">
+  <div class="mx-auto max-w-5xl px-4 py-16 text-center sm:px-6 lg:px-8">
+    <p class="font-heading text-sm font-semibold uppercase tracking-widest text-brand-green">Ecosistema InvenTech</p>
+    <h1 class="mt-3 font-heading text-3xl font-bold sm:text-4xl">Productos y servicios</h1>
+    <p class="mx-auto mt-3 max-w-2xl text-white/70">
+      InvenTech combina software en la nube y hardware IoT para que las pymes controlen
+      su inventario, sus ventas y sus puntos de venta desde un mismo ecosistema.
+    </p>
+  </div>
+</section>
+
+<section class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
+  <div class="mb-10 flex items-center justify-center gap-4 rounded-card border border-brand-navy/10 bg-brand-navy/[0.03] p-4 text-sm text-brand-navy">
+    <span class="font-medium">InvenTech POS Cloud</span>
+    <span aria-hidden="true">→ incluye inventario multi-bodega</span>
+    <span class="text-brand-blue" aria-hidden="true">+</span>
+    <span class="font-medium">InvenTech ScanPro IoT</span>
+    <span class="text-brand-gray">(requiere POS Cloud)</span>
+  </div>
+
+  <div class="grid gap-8 lg:grid-cols-2">
+    <ui-card *ngFor="let product of products">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h2 class="font-heading text-xl font-semibold text-brand-navy">{{ product.name }}</h2>
+          <p class="text-sm text-brand-gray">{{ product.tagline }}</p>
+        </div>
+        <ui-badge [tone]="product.standalone ? 'success' : 'info'">
+          {{ product.standalone ? 'Producto independiente' : 'Requiere ecosistema' }}
+        </ui-badge>
+      </div>
+
+      <p class="mt-4 text-sm text-brand-navy/90">{{ product.description }}</p>
+
+      <div *ngIf="product.dependsOn" class="mt-3 rounded-control bg-brand-blue/5 px-3 py-2 text-xs text-brand-blue">
+        Depende de {{ dependencyLabel(product.dependsOn) }}: no se comercializa como producto aislado del ecosistema de software.
+      </div>
+
+      <ul class="mt-4 space-y-2 text-sm text-brand-navy/90">
+        <li *ngFor="let feature of product.features" class="flex gap-2">
+          <span class="text-brand-green" aria-hidden="true">✓</span>
+          <span>{{ feature }}</span>
+        </li>
+      </ul>
+
+      <div class="mt-6 flex items-baseline gap-1 border-t border-brand-navy/10 pt-4">
+        <span class="font-heading text-2xl font-bold text-brand-blue">{{ product.referencePrice }}</span>
+        <span class="text-sm text-brand-gray">{{ product.priceUnit }}</span>
+        <span class="ml-auto rounded-full bg-brand-green/10 px-2.5 py-0.5 text-xs font-medium text-brand-green">SaaS</span>
+      </div>
+
+      <a
+        routerLink="/aplicativos"
+        class="mt-4 inline-flex w-full items-center justify-center rounded-control bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:bg-brand-blue/90"
+      >
+        Ver demostración funcional
+      </a>
+    </ui-card>
+  </div>
+</section>

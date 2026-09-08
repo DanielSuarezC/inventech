@@ -1,0 +1,84 @@
+<div
+  #stage
+  class="relative flex flex-col bg-white"
+  [class.fixed]="isFullscreen()"
+  [class.inset-0]="isFullscreen()"
+  [class.z-50]="isFullscreen()"
+>
+  <!-- Barra de progreso -->
+  <div class="h-1 w-full bg-brand-navy/10" role="progressbar" [attr.aria-valuenow]="progressPercent" aria-valuemin="0" aria-valuemax="100">
+    <div class="h-1 bg-brand-gradient transition-all duration-300" [style.width.%]="progressPercent"></div>
+  </div>
+
+  <!-- Barra de control -->
+  <div class="flex items-center justify-between gap-2 border-b border-brand-navy/10 bg-white px-4 py-2 sm:px-6">
+    <button
+      type="button"
+      class="rounded-control px-3 py-1.5 text-sm font-medium text-brand-navy hover:bg-brand-navy/5"
+      (click)="toggleToc()"
+      [attr.aria-expanded]="tocOpen()"
+      aria-controls="presentation-toc"
+    >
+      Índice
+    </button>
+
+    <span class="text-sm text-brand-gray">
+      Diapositiva {{ currentIndex() + 1 }} de {{ slides.length }}
+    </span>
+
+    <button
+      type="button"
+      class="rounded-control px-3 py-1.5 text-sm font-medium text-brand-navy hover:bg-brand-navy/5"
+      (click)="togglePresentationMode()"
+    >
+      {{ isFullscreen() ? 'Salir de presentación (Esc)' : 'Modo presentación' }}
+    </button>
+  </div>
+
+  <!-- Índice desplegable -->
+  <div id="presentation-toc" *ngIf="tocOpen()" class="border-b border-brand-navy/10 bg-brand-navy/[0.03] px-4 py-3 sm:px-6">
+    <ol class="grid gap-1 sm:grid-cols-2 lg:grid-cols-3">
+      <li *ngFor="let slide of slides; let i = index">
+        <button
+          type="button"
+          class="w-full rounded-control px-3 py-1.5 text-left text-sm hover:bg-brand-blue/5"
+          [class.text-brand-blue]="i === currentIndex()"
+          [class.font-semibold]="i === currentIndex()"
+          (click)="goTo(i)"
+        >
+          {{ i + 1 }}. {{ slide.title }}
+        </button>
+      </li>
+    </ol>
+  </div>
+
+  <!-- Slide activa -->
+  <div class="flex-1 overflow-y-auto px-4 py-8 sm:px-8 lg:px-16" [class.flex]="isFullscreen()" [class.items-center]="isFullscreen()">
+    <div class="mx-auto w-full max-w-4xl" *ngIf="currentSlide as slide">
+      <p *ngIf="slide.subtitle" class="mb-2 text-sm font-medium uppercase tracking-wide text-brand-blue">{{ slide.subtitle }}</p>
+      <h2 class="mb-6 font-heading text-2xl font-semibold text-brand-navy sm:text-3xl">{{ slide.title }}</h2>
+
+      <app-slide-blocks [blocks]="slide.blocks"></app-slide-blocks>
+    </div>
+  </div>
+
+  <!-- Navegación siguiente/anterior -->
+  <div class="flex items-center justify-between border-t border-brand-navy/10 px-4 py-3 sm:px-6">
+    <button
+      type="button"
+      class="rounded-control px-4 py-2 text-sm font-medium text-brand-navy disabled:opacity-40"
+      [disabled]="currentIndex() === 0"
+      (click)="previous()"
+    >
+      ← Anterior
+    </button>
+    <button
+      type="button"
+      class="rounded-control bg-brand-blue px-4 py-2 text-sm font-medium text-white disabled:opacity-40"
+      [disabled]="currentIndex() === slides.length - 1"
+      (click)="next()"
+    >
+      Siguiente →
+    </button>
+  </div>
+</div>

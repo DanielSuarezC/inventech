@@ -1,0 +1,18 @@
+<div class="space-y-1">
+  <label [for]="id" class="block text-sm font-medium text-brand-navy">{{ label }}</label>
+  <input
+    [id]="id"
+    [type]="type"
+    [value]="value"
+    [disabled]="disabled"
+    [placeholder]="placeholder"
+    [attr.autocomplete]="autocomplete"
+    [attr.aria-invalid]="!!error"
+    [attr.aria-describedby]="error ? id + '-error' : (hint ? id + '-hint' : null)"
+    (input)="handleInput($any($event.target).value)"
+    (blur)="handleBlur()"
+    class="w-full rounded-control border border-brand-navy/20 px-3 py-2 text-sm text-brand-navy focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue disabled:bg-brand-navy/5"
+  />
+  <p *ngIf="hint && !error" [id]="id + '-hint'" class="text-xs text-brand-gray">{{ hint }}</p>
+  <p *ngIf="error" [id]="id + '-error'" class="text-xs text-red-600">{{ error }}</p>
+</div>
