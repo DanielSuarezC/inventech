@@ -1,6 +1,6 @@
 <section class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
-  <h1 class="font-heading text-2xl font-bold text-brand-navy">Lector de códigos de barras</h1>
-  <p class="text-sm text-brand-gray">
+  <h1 class="font-heading text-2xl font-bold text-brand-navy dark:text-white">Lector de códigos de barras</h1>
+  <p class="text-sm text-brand-gray dark:text-white/60">
     InvenTech ScanPro IoT — simulación de lectura vía teclado. En producción, un
     lector físico USB-HID envía el código seguido de "Enter", exactamente como
     este formulario.
@@ -10,7 +10,7 @@
   <ui-alert *ngIf="successMessage()" tone="success" class="mt-4 block">{{ successMessage() }}</ui-alert>
 
   <ui-card class="mt-6 block">
-    <label for="barcode" class="block text-sm font-medium text-brand-navy">Código escaneado</label>
+    <label for="barcode" class="block text-sm font-medium text-brand-navy dark:text-white">Código escaneado</label>
     <input
       #barcodeInput
       id="barcode"
@@ -20,7 +20,7 @@
       (ngModelChange)="barcode.set($event)"
       (keyup.enter)="handleScan()"
       placeholder="Escanea o escribe un SKU y presiona Enter..."
-      class="mt-2 w-full rounded-control border border-brand-navy/20 px-3 py-2 text-lg tracking-wide focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
+      class="mt-2 w-full rounded-control border border-brand-navy/20 bg-white px-3 py-2 text-lg tracking-wide text-brand-navy focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue dark:border-white/20 dark:bg-brand-navy/40 dark:text-white placeholder:dark:text-white/50"
     />
     <ui-button class="mt-3" [loading]="processing()" (click)="handleScan()">Procesar código</ui-button>
   </ui-card>
@@ -28,12 +28,12 @@
   <ui-card *ngIf="lastMatch() as product" class="mt-6 block">
     <div class="flex items-center justify-between">
       <div>
-        <h2 class="font-heading text-lg font-semibold text-brand-navy">{{ product.name }}</h2>
-        <p class="text-sm text-brand-gray">SKU: {{ product.sku }}</p>
+        <h2 class="font-heading text-lg font-semibold text-brand-navy dark:text-white">{{ product.name }}</h2>
+        <p class="text-sm text-brand-gray dark:text-white/60">SKU: {{ product.sku }}</p>
       </div>
       <ui-badge tone="success">Producto encontrado</ui-badge>
     </div>
-    <p class="mt-2 text-sm text-brand-navy/90">
+    <p class="mt-2 text-sm text-brand-navy/90 dark:text-white/80">
       Stock actual: <span class="font-medium">{{ product.track_inventory ? product.stock : 'sin control' }}</span>
       — Precio: $ {{ product.sale_price }} COP
     </p>
@@ -47,10 +47,10 @@
   </ui-card>
 
   <div *ngIf="log().length > 0" class="mt-8">
-    <h3 class="font-heading text-sm font-semibold uppercase tracking-wide text-brand-navy">Historial de esta sesión</h3>
-    <ul class="mt-2 divide-y divide-brand-navy/10 rounded-card border border-brand-navy/10 bg-white">
+    <h3 class="font-heading text-sm font-semibold uppercase tracking-wide text-brand-navy dark:text-white">Historial de esta sesión</h3>
+    <ul class="mt-2 divide-y divide-brand-navy/10 rounded-card border border-brand-navy/10 bg-white dark:divide-white/10 dark:border-white/10 dark:bg-brand-navy/40">
       <li *ngFor="let entry of log()" class="flex items-center justify-between px-4 py-2 text-sm">
-        <span class="font-mono text-brand-navy">{{ entry.barcode }}</span>
+        <span class="font-mono text-brand-navy dark:text-white">{{ entry.barcode }}</span>
         <ui-badge [tone]="entry.found ? 'success' : 'danger'">{{ entry.found ? entry.productName : 'No encontrado' }}</ui-badge>
       </li>
     </ul>

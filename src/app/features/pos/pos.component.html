@@ -1,6 +1,6 @@
 <section class="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-  <h1 class="font-heading text-2xl font-bold text-brand-navy">Punto de venta</h1>
-  <p class="text-sm text-brand-gray">InvenTech POS Cloud — registra ventas y descuenta stock en tiempo real.</p>
+  <h1 class="font-heading text-2xl font-bold text-brand-navy dark:text-white">Punto de venta</h1>
+  <p class="text-sm text-brand-gray dark:text-white/60">InvenTech POS Cloud — registra ventas y descuenta stock en tiempo real.</p>
 
   <ui-alert *ngIf="errorMessage()" tone="danger" class="mt-4 block">{{ errorMessage() }}</ui-alert>
   <ui-alert *ngIf="successMessage()" tone="success" class="mt-4 block">{{ successMessage() }}</ui-alert>
@@ -14,7 +14,7 @@
           (ngModelChange)="search.set($event)"
           (keyup.enter)="loadProducts()"
           placeholder="Buscar producto por nombre o SKU..."
-          class="w-full rounded-control border border-brand-navy/20 px-3 py-2 text-sm focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue"
+          class="w-full rounded-control border border-brand-navy/20 bg-white px-3 py-2 text-sm text-brand-navy focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue dark:border-white/20 dark:bg-brand-navy/40 dark:text-white placeholder:dark:text-white/50"
         />
         <ui-button variant="ghost" (click)="loadProducts()">Buscar</ui-button>
       </div>
@@ -34,11 +34,11 @@
           type="button"
           (click)="addToCart(product)"
           [disabled]="product.track_inventory && product.stock <= 0"
-          class="rounded-card border border-brand-navy/10 bg-white p-4 text-left shadow-card transition-shadow hover:shadow-elevated disabled:cursor-not-allowed disabled:opacity-50"
+          class="rounded-card border border-brand-navy/10 bg-white p-4 text-left shadow-card transition-shadow hover:shadow-elevated disabled:cursor-not-allowed disabled:opacity-50 dark:border-white/10 dark:bg-brand-navy/40"
         >
-          <p class="font-medium text-brand-navy">{{ product.name }}</p>
-          <p class="text-sm text-brand-gray">$ {{ product.sale_price | number: '1.0-0' }} COP</p>
-          <p class="mt-1 text-xs" [class.text-red-600]="product.track_inventory && product.stock <= 0" [class.text-brand-gray]="!(product.track_inventory && product.stock <= 0)">
+          <p class="font-medium text-brand-navy dark:text-white">{{ product.name }}</p>
+          <p class="text-sm text-brand-gray dark:text-white/60">$ {{ product.sale_price | number: '1.0-0' }} COP</p>
+          <p class="mt-1 text-xs" [class.text-red-600]="product.track_inventory && product.stock <= 0" [class.text-brand-gray]="!(product.track_inventory && product.stock <= 0)" [class.dark:text-red-400]="product.track_inventory && product.stock <= 0" [class.dark:text-white/60]="!(product.track_inventory && product.stock <= 0)">
             {{ product.track_inventory ? 'Stock: ' + product.stock : 'Sin control de stock' }}
           </p>
         </button>
@@ -46,7 +46,7 @@
     </div>
 
     <ui-card class="h-fit lg:sticky lg:top-20">
-      <h2 class="font-heading text-lg font-semibold text-brand-navy">Carrito</h2>
+      <h2 class="font-heading text-lg font-semibold text-brand-navy dark:text-white">Carrito</h2>
 
       <ui-empty-state
         *ngIf="cart().length === 0"

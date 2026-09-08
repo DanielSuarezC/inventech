@@ -343,3 +343,43 @@ $$;
 -- en este prototipo; se mantiene como constante en el frontend
 -- (core/data/payment-methods.data.ts) para evitar una tabla innecesaria.
 -- =========================================================================
+
+-- =========================================================================
+-- admin: metadatos de documentos y permisos de escritura
+-- =========================================================================
+
+alter table public.documents
+  add column if not exists document_type text,
+  add column if not exists version text,
+  add column if not exists author text,
+  add column if not exists status text not null default 'publicado'
+    check (status in ('borrador', 'publicado', 'archivado')),
+  add column if not exists tags text[] not null default '{}';
+
+-- Admins pueden insertar, actualizar y eliminar documentos
+create policy "Admins insertan documentos"
+  on public.documents for insert
+  with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin'));
+
+create policy "Admins actualizan documentos"
+  on public.documents for update
+  using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin'))
+  with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin'));
+
+create policy "Admins eliminan documentos"
+  on public.documents for delete
+  using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin'));
+
+-- Admins pueden insertar, actualizar y eliminar categorías de documentos
+create policy "Admins insertan categorías"
+  on public.document_categories for insert
+  with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin'));
+
+create policy "Admins actualizan categorías"
+  on public.document_categories for update
+  using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin'))
+  with check (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin'));
+
+create policy "Admins eliminan categorías"
+  on public.document_categories for delete
+  using (exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin'));

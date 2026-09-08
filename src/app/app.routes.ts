@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard, guestGuard } from './core/auth/auth.guard';
+import { adminGuard } from './core/auth/admin.guard';
 
 export const routes: Routes = [
   {
@@ -83,6 +84,12 @@ export const routes: Routes = [
         canActivate: [authGuard],
         loadComponent: () => import('./features/auth/dashboard/dashboard.component').then((m) => m.DashboardComponent),
         title: 'Panel — InvenTech',
+      },
+      {
+        path: 'panel/documentos',
+        canActivate: [authGuard, adminGuard],
+        loadComponent: () => import('./features/regulations/admin/document-admin.component').then((m) => m.DocumentAdminComponent),
+        title: 'Gestión de documentos — InvenTech',
       },
       { path: '', redirectTo: 'login', pathMatch: 'full' },
     ],

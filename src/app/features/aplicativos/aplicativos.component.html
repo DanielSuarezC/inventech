@@ -10,7 +10,7 @@
 </section>
 
 <section class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
-  <div *ngIf="!authService.isAuthenticated()" class="mb-8 rounded-card border border-brand-blue/20 bg-brand-blue/5 p-4 text-sm text-brand-navy">
+  <div *ngIf="!authService.isAuthenticated()" class="mb-8 rounded-card border border-brand-blue/20 bg-brand-blue/5 p-4 text-sm text-brand-navy dark:border-brand-blue/40 dark:bg-brand-blue/10 dark:text-white">
     Necesitas iniciar sesión para usar los aplicativos con datos reales.
     <a routerLink="/acceso/login" class="font-medium text-brand-blue hover:underline">Inicia sesión</a>
     o
@@ -19,18 +19,18 @@
 
   <div class="grid gap-6 sm:grid-cols-3">
     <ui-card>
-      <h2 class="font-heading text-lg font-semibold text-brand-navy">Inventario</h2>
-      <p class="mt-2 text-sm text-brand-gray">Productos, categorías, stock y alertas de InvenTech POS Cloud.</p>
+      <h2 class="font-heading text-lg font-semibold text-brand-navy dark:text-white">Inventario</h2>
+      <p class="mt-2 text-sm text-brand-gray dark:text-white/60">Productos, categorías, stock y alertas de InvenTech POS Cloud.</p>
       <a routerLink="/aplicativos/inventario" class="mt-4 inline-block text-sm font-medium text-brand-blue hover:underline">Entrar →</a>
     </ui-card>
     <ui-card>
-      <h2 class="font-heading text-lg font-semibold text-brand-navy">Punto de venta</h2>
-      <p class="mt-2 text-sm text-brand-gray">Carrito, cobro y descuento de stock en tiempo real.</p>
+      <h2 class="font-heading text-lg font-semibold text-brand-navy dark:text-white">Punto de venta</h2>
+      <p class="mt-2 text-sm text-brand-gray dark:text-white/60">Carrito, cobro y descuento de stock en tiempo real.</p>
       <a routerLink="/aplicativos/pos" class="mt-4 inline-block text-sm font-medium text-brand-blue hover:underline">Entrar →</a>
     </ui-card>
     <ui-card>
-      <h2 class="font-heading text-lg font-semibold text-brand-navy">Lector de códigos</h2>
-      <p class="mt-2 text-sm text-brand-gray">InvenTech ScanPro IoT — simulación conectada a inventario y POS.</p>
+      <h2 class="font-heading text-lg font-semibold text-brand-navy dark:text-white">Lector de códigos</h2>
+      <p class="mt-2 text-sm text-brand-gray dark:text-white/60">InvenTech ScanPro IoT — simulación conectada a inventario y POS.</p>
       <a routerLink="/aplicativos/scanner" class="mt-4 inline-block text-sm font-medium text-brand-blue hover:underline">Entrar →</a>
     </ui-card>
   </div>

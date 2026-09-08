@@ -1,5 +1,5 @@
 <div class="space-y-1">
-  <label [for]="id" class="block text-sm font-medium text-brand-navy">{{ label }}</label>
+  <label [for]="id" class="block text-sm font-medium text-brand-navy dark:text-white">{{ label }}</label>
   <input
     [id]="id"
     [type]="type"
@@ -11,8 +11,8 @@
     [attr.aria-describedby]="error ? id + '-error' : (hint ? id + '-hint' : null)"
     (input)="handleInput($any($event.target).value)"
     (blur)="handleBlur()"
-    class="w-full rounded-control border border-brand-navy/20 px-3 py-2 text-sm text-brand-navy focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue disabled:bg-brand-navy/5"
+    class="w-full rounded-control border border-brand-navy/20 bg-white px-3 py-2 text-sm text-brand-navy focus:border-brand-blue focus:outline-none focus:ring-1 focus:ring-brand-blue disabled:bg-brand-navy/5 dark:border-white/20 dark:bg-brand-navy/40 dark:text-white dark:disabled:bg-white/5"
   />
-  <p *ngIf="hint && !error" [id]="id + '-hint'" class="text-xs text-brand-gray">{{ hint }}</p>
-  <p *ngIf="error" [id]="id + '-error'" class="text-xs text-red-600">{{ error }}</p>
+  <p *ngIf="hint && !error" [id]="id + '-hint'" class="text-xs text-brand-gray dark:text-white/60">{{ hint }}</p>
+  <p *ngIf="error" [id]="id + '-error'" class="text-xs text-red-600 dark:text-red-400">{{ error }}</p>
 </div>

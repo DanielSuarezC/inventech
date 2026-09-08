@@ -72,9 +72,9 @@
 
     <!-- stats -->
     <div *ngIf="block.type === 'stats'" class="grid gap-4 sm:grid-cols-3">
-      <div *ngFor="let stat of $any(block.content)" class="rounded-card bg-brand-navy/[0.03] p-4 text-center">
+      <div *ngFor="let stat of $any(block.content)" class="rounded-card bg-brand-navy/[0.03] p-4 text-center dark:bg-white/5">
         <p class="font-heading text-2xl font-bold text-brand-blue">{{ stat.value }}</p>
-        <p class="text-xs text-brand-gray">{{ stat.label }}</p>
+        <p class="text-xs text-brand-gray dark:text-white/60">{{ stat.label }}</p>
       </div>
     </div>
   </ng-container>
