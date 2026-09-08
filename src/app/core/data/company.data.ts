@@ -150,7 +150,7 @@ export const ORG_ROLES: OrgRole[] = [
   { order: 1, title: 'Gerente General / Representante Legal', area: 'Dirección', responsibility: 'Dirigir la empresa, tomar decisiones estratégicas y representar legalmente a INVENTECH.', assignee: 'Daniel Suárez', isPartner: true, photoUrl: 'assets/team/daniel_suarez.jpg' },
   { order: 2, title: 'Contadora Pública', area: 'Administración y Finanzas', responsibility: 'Manejar la contabilidad, obligaciones tributarias, estados financieros y control contable.', assignee: 'Isabel López', isPartner: true, photoUrl: 'assets/team/isabel_lopez.jpeg' },
   { order: 3, title: 'Auxiliar Administrativo y Contable', area: 'Administración y Finanzas', responsibility: 'Apoyar procesos administrativos, facturación, archivo y gestión documental.', assignee: 'Camila Torres' },
-  { order: 4, title: 'Director de Tecnología (CTO)', area: 'Tecnología y Desarrollo', responsibility: 'Dirigir la estrategia tecnológica y supervisar el desarrollo del sistema.', assignee: 'Gerardo Argel', isPartner: true },
+  { order: 4, title: 'Director de Tecnología (CTO)', area: 'Tecnología y Desarrollo', responsibility: 'Dirigir la estrategia tecnológica y supervisar el desarrollo del sistema.', assignee: 'Gerardo Argel', isPartner: true, photoUrl: 'assets/team/gerardo_argel.jpeg' },
   { order: 5, title: 'Desarrollador Full Stack Senior', area: 'Tecnología y Desarrollo', responsibility: 'Desarrollar y mantener el backend y frontend de INVENTECH.', assignee: 'Andrés Pineda' },
   { order: 6, title: 'Desarrollador de Software Junior', area: 'Tecnología y Desarrollo', responsibility: 'Apoyar el desarrollo de funcionalidades, correcciones e integraciones.', assignee: 'Kevin Salcedo' },
   { order: 7, title: 'Especialista en Hardware e IoT', area: 'Tecnología y Desarrollo', responsibility: 'Diseñar, configurar y mantener lectores de código de barras y dispositivos IoT.', assignee: 'Laura Martínez' },
@@ -158,7 +158,7 @@ export const ORG_ROLES: OrgRole[] = [
   { order: 9, title: 'Ejecutiva Comercial', area: 'Comercial y Servicio', responsibility: 'Buscar clientes, presentar la solución y cerrar negocios.', assignee: 'Luz Mazo', isPartner: true, photoUrl: 'assets/team/luz_mazo.jpeg' },
   { order: 10, title: 'Analista de Implementación y Capacitación', area: 'Comercial y Servicio', responsibility: 'Instalar el sistema, configurar clientes y capacitarlos.', assignee: 'Diego Herrera' },
   { order: 11, title: 'Soporte Técnico', area: 'Comercial y Servicio', responsibility: 'Atender incidentes, dudas y requerimientos de los clientes.', assignee: 'Valentina Ríos' },
-  { order: 12, title: 'Analista de Marketing y Comunicaciones', area: 'Comercial y Servicio', responsibility: 'Gestionar redes sociales, publicidad, contenidos y posicionamiento de la marca.', assignee: 'Yennifer Canaval', isPartner: true },
+  { order: 12, title: 'Analista de Marketing y Comunicaciones', area: 'Comercial y Servicio', responsibility: 'Gestionar redes sociales, publicidad, contenidos y posicionamiento de la marca.', assignee: 'Yennifer Canaval', isPartner: true, photoUrl: 'assets/team/yennifer_canaval.jpeg' },
 ];
 
 /** Socios principales, para uso en la sección "Nuestro equipo" del Home. */
