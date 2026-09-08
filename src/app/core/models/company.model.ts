@@ -56,6 +56,10 @@ export interface OrgRole {
   fictitious?: boolean;
   /** true cuando el nombre proviene de OCR ilegible del organigrama original y no pudo verificarse contra una tabla del documento. */
   nameUnverified?: boolean;
+  /** true para los socios principales de INVENTECH S.A.S. (identificados en negrilla en la tabla fuente). */
+  isPartner?: boolean;
+  /** ruta del retrato circular del integrante; ausente si no hay fotografía disponible todavía. */
+  photoUrl?: string;
 }
 
 export interface ComplementaryInfo {

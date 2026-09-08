@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   template: `
     <div class="inline-flex items-center gap-2">
       <img 
-        src="assets/logo_horizon.png" 
+        src="assets/logo_black.png" 
         alt="InvenTech Logo" 
         class="object-contain w-auto"
         [class.h-8]="size === 'md'"

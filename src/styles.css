@@ -15,8 +15,13 @@ body {
 }
 
 body {
-  @apply font-body text-brand-navy antialiased;
+  @apply font-body text-brand-navy antialiased transition-colors duration-200;
   background-color: #f7f9fb;
+}
+
+.dark body {
+  @apply text-white;
+  background-color: #071522;
 }
 
 h1,

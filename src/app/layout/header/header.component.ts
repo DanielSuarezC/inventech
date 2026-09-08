@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { LogoComponent } from '../logo/logo.component';
+import { ThemeToggleComponent } from '../../shared/ui/theme-toggle/theme-toggle.component';
 
 interface NavItem {
   label: string;
@@ -11,7 +12,7 @@ interface NavItem {
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, LogoComponent],
+  imports: [CommonModule, RouterLink, RouterLinkActive, LogoComponent, ThemeToggleComponent],
   templateUrl: './header.component.html',
 })
 export class HeaderComponent {

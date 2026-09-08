@@ -86,6 +86,34 @@ duplicar mantenimiento en dos lugares; el estado operativo real vive en
 `docs/implementation-plan.md` → PROJECT STATUS, que se actualiza en cada
 iteración.
 
+## Iteración 2026-09-08 — orquestación multi-agente
+
+| ID | Fuente | Requisito | Prioridad | Módulo | Criterio de aceptación | Estado |
+|----|--------|-----------|-----------|--------|------------------------|--------|
+| REQ-060 | Master §17 | Organigrama con nombres reales de los 12 cargos + 5 socios marcados | Alta | company | ORG_ROLES actualizado, badge "Socio" visible, D-006 resuelto | Verificado (build + captura) |
+| REQ-061 | Master §12 | Marco circular de fotos, listo para recibir imágenes reales | Alta | shared/ui | `ui-avatar` con placeholder de iniciales; usado en organigrama y Home | Verificado (build + captura) |
+| REQ-062 | Master §26 | Botón flotante de WhatsApp con config centralizada | Alta | shared/ui | Visible en todas las páginas (ShellComponent), número no duplicado | Verificado (captura, visible en home/catálogo) |
+| REQ-063 | Master §23 | Selector de modo claro/oscuro persistente, sin texto ilegible | Alta | core/services, layout | `ThemeService` + `class` en `<html>`; probado en Home y Catálogo | Verificado (capturas claro/oscuro) |
+| REQ-064 | Master §15 | Tercera tarjeta "Plan Completo" con precio calculado dinámicamente | Alta | catalog | `FULL_PLAN_PRICE_COP` = suma de `priceValueCOP`; sin valor manual | Verificado (build + captura: $238.000 COP) |
+| REQ-065 | Master §16 | "Instalación incluida" visible en las 3 tarjetas (POS Cloud, ScanPro IoT, Plan Completo) | Alta | catalog, home | Etiqueta verde visible en las 3 | Verificado (captura) |
+| REQ-066 | Master §12 | Sección "Nuestro equipo" en Home con los 5 socios principales | Alta | home | Avatar + nombre + cargo, ancla `#equipo` | Verificado (captura) |
+| REQ-067 | Master §24-25 | Sección de contacto en Home + footer con redes sociales oficiales | Media | home, footer | Correo, sitio web y 5 redes con ícono y handle | Verificado (captura) |
+| REQ-068 (bugfix) | Usuario | Diapositiva 4 ("Proceso de constitución legal") no debe recortarse en modo presentación | Alta | company/presentation | Los 11 pasos accesibles por scroll sin recorte | Verificado (captura: ítems 1-11 visibles/scrolleables) |
+
+Notas de esta iteración:
+- Verificación real: `npm run build` = PASS después de cada cambio; capturas
+  de pantalla tomadas con Playwright + Chromium contra `ng serve` en modo
+  claro y oscuro para Home, Catálogo y la diapositiva 4 de la presentación
+  (ver metodología en `docs/testing.md`).
+- Dark mode se aplicó a: shell, header, footer, Home, Catálogo, presentación
+  completa (motor + bloques) y componentes `shared/ui` (card, badge, button).
+  **Pendiente:** auditoría de dark mode en Inventario, POS, Scanner,
+  Normatividad y las páginas de autenticación/panel — no se tocaron en esta
+  iteración.
+- Fotografías reales del equipo: siguen sin existir en `src/assets`; el
+  marco (`ui-avatar`) ya está listo, solo falta asignar `photoUrl` por
+  integrante una vez el usuario suba los archivos.
+
 ## Conflictos y resoluciones documentadas
 
 Ver [[decisions]] para el detalle de D-001 a D-005 (nombre de archivo,

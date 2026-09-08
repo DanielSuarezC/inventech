@@ -1,6 +1,6 @@
 <div
   #stage
-  class="relative flex flex-col bg-white"
+  class="relative flex flex-col bg-white transition-colors dark:bg-[#0b1f33]"
   [class.fixed]="isFullscreen()"
   [class.inset-0]="isFullscreen()"
   [class.z-50]="isFullscreen()"
@@ -11,10 +11,10 @@
   </div>
 
   <!-- Barra de control -->
-  <div class="flex items-center justify-between gap-2 border-b border-brand-navy/10 bg-white px-4 py-2 sm:px-6">
+  <div class="flex items-center justify-between gap-2 border-b border-brand-navy/10 bg-white px-4 py-2 dark:border-white/10 dark:bg-[#0b1f33] sm:px-6">
     <button
       type="button"
-      class="rounded-control px-3 py-1.5 text-sm font-medium text-brand-navy hover:bg-brand-navy/5"
+      class="rounded-control px-3 py-1.5 text-sm font-medium text-brand-navy hover:bg-brand-navy/5 dark:text-white dark:hover:bg-white/10"
       (click)="toggleToc()"
       [attr.aria-expanded]="tocOpen()"
       aria-controls="presentation-toc"
@@ -22,13 +22,13 @@
       Índice
     </button>
 
-    <span class="text-sm text-brand-gray">
+    <span class="text-sm text-brand-gray dark:text-white/60">
       Diapositiva {{ currentIndex() + 1 }} de {{ slides.length }}
     </span>
 
     <button
       type="button"
-      class="rounded-control px-3 py-1.5 text-sm font-medium text-brand-navy hover:bg-brand-navy/5"
+      class="rounded-control px-3 py-1.5 text-sm font-medium text-brand-navy hover:bg-brand-navy/5 dark:text-white dark:hover:bg-white/10"
       (click)="togglePresentationMode()"
     >
       {{ isFullscreen() ? 'Salir de presentación (Esc)' : 'Modo presentación' }}
@@ -36,12 +36,12 @@
   </div>
 
   <!-- Índice desplegable -->
-  <div id="presentation-toc" *ngIf="tocOpen()" class="border-b border-brand-navy/10 bg-brand-navy/[0.03] px-4 py-3 sm:px-6">
+  <div id="presentation-toc" *ngIf="tocOpen()" class="border-b border-brand-navy/10 bg-brand-navy/[0.03] px-4 py-3 dark:border-white/10 dark:bg-white/5 sm:px-6">
     <ol class="grid gap-1 sm:grid-cols-2 lg:grid-cols-3">
       <li *ngFor="let slide of slides; let i = index">
         <button
           type="button"
-          class="w-full rounded-control px-3 py-1.5 text-left text-sm hover:bg-brand-blue/5"
+          class="w-full rounded-control px-3 py-1.5 text-left text-sm text-brand-navy hover:bg-brand-blue/5 dark:text-white/80 dark:hover:bg-brand-blue/20"
           [class.text-brand-blue]="i === currentIndex()"
           [class.font-semibold]="i === currentIndex()"
           (click)="goTo(i)"
@@ -53,20 +53,27 @@
   </div>
 
   <!-- Slide activa -->
-  <div class="flex-1 overflow-y-auto px-4 py-8 sm:px-8 lg:px-16" [class.flex]="isFullscreen()" [class.items-center]="isFullscreen()">
+  <!--
+    No usar `flex items-center` para centrar verticalmente este contenedor:
+    con overflow-y-auto y contenido más alto que el viewport (p. ej. la
+    diapositiva "Proceso de constitución legal" con 11 pasos, o modo
+    presentación en pantallas bajas), align-items:center recorta la parte
+    superior del contenido y la deja inaccesible al hacer scroll.
+  -->
+  <div class="flex-1 min-h-0 overflow-y-auto px-4 py-8 sm:px-8 lg:px-16">
     <div class="mx-auto w-full max-w-4xl" *ngIf="currentSlide as slide">
       <p *ngIf="slide.subtitle" class="mb-2 text-sm font-medium uppercase tracking-wide text-brand-blue">{{ slide.subtitle }}</p>
-      <h2 class="mb-6 font-heading text-2xl font-semibold text-brand-navy sm:text-3xl">{{ slide.title }}</h2>
+      <h2 class="mb-6 font-heading text-2xl font-semibold text-brand-navy dark:text-white sm:text-3xl">{{ slide.title }}</h2>
 
       <app-slide-blocks [blocks]="slide.blocks"></app-slide-blocks>
     </div>
   </div>
 
   <!-- Navegación siguiente/anterior -->
-  <div class="flex items-center justify-between border-t border-brand-navy/10 px-4 py-3 sm:px-6">
+  <div class="flex items-center justify-between border-t border-brand-navy/10 px-4 py-3 dark:border-white/10 sm:px-6">
     <button
       type="button"
-      class="rounded-control px-4 py-2 text-sm font-medium text-brand-navy disabled:opacity-40"
+      class="rounded-control px-4 py-2 text-sm font-medium text-brand-navy disabled:opacity-40 dark:text-white"
       [disabled]="currentIndex() === 0"
       (click)="previous()"
     >

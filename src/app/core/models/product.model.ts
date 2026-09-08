@@ -3,11 +3,14 @@ export interface CatalogProduct {
   name: string;
   tagline: string;
   description: string;
+  /** Valor numérico en COP, usado para calcular dinámicamente el precio del Plan Completo. */
+  priceValueCOP: number;
   referencePrice: string;
   priceUnit: string;
   features: string[];
   dependsOn?: string;
   standalone: boolean;
+  installationIncluded: true;
 }
 
 export interface Category {

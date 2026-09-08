@@ -32,7 +32,7 @@ export class ButtonComponent {
   private readonly variants: Record<ButtonVariant, string> = {
     primary: 'bg-brand-blue text-white hover:bg-brand-blue/90 focus-visible:outline-brand-blue',
     secondary: 'bg-brand-green text-white hover:bg-brand-green/90 focus-visible:outline-brand-green',
-    ghost: 'bg-transparent text-brand-navy hover:bg-brand-navy/5 focus-visible:outline-brand-navy',
+    ghost: 'bg-transparent text-brand-navy hover:bg-brand-navy/5 focus-visible:outline-brand-navy dark:text-white dark:hover:bg-white/10',
     danger: 'bg-red-600 text-white hover:bg-red-700 focus-visible:outline-red-600',
   };
 

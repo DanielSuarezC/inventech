@@ -1,4 +1,4 @@
-<header class="sticky top-0 z-40 border-b border-brand-navy/10 bg-white/90 backdrop-blur">
+<header class="sticky top-0 z-40 border-b border-brand-navy/10 bg-white/90 backdrop-blur transition-colors dark:border-white/10 dark:bg-brand-navy/90">
   <nav class="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6 lg:px-8" aria-label="Navegación principal">
     <a routerLink="/" class="flex items-center gap-2" (click)="closeMenu()">
       <app-logo size="md"></app-logo>
@@ -10,7 +10,7 @@
           [routerLink]="item.path"
           routerLinkActive="text-brand-blue bg-brand-blue/5"
           [routerLinkActiveOptions]="{ exact: item.path === '/' }"
-          class="rounded-control px-3 py-2 text-sm font-medium text-brand-navy transition-colors hover:bg-brand-navy/5"
+          class="rounded-control px-3 py-2 text-sm font-medium text-brand-navy transition-colors hover:bg-brand-navy/5 dark:text-white dark:hover:bg-white/10"
         >
           {{ item.label }}
         </a>
@@ -18,7 +18,8 @@
     </ul>
 
     <div class="hidden items-center gap-2 md:flex">
-      <a routerLink="/acceso/login" class="rounded-control px-3 py-2 text-sm font-medium text-brand-navy hover:bg-brand-navy/5">
+      <app-theme-toggle></app-theme-toggle>
+      <a routerLink="/acceso/login" class="rounded-control px-3 py-2 text-sm font-medium text-brand-navy hover:bg-brand-navy/5 dark:text-white dark:hover:bg-white/10">
         Iniciar sesión
       </a>
       <a routerLink="/acceso/panel" class="rounded-control bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:bg-brand-blue/90">
@@ -26,9 +27,11 @@
       </a>
     </div>
 
+    <div class="flex items-center gap-1 md:hidden">
+      <app-theme-toggle></app-theme-toggle>
     <button
       type="button"
-      class="inline-flex items-center justify-center rounded-control p-2 text-brand-navy hover:bg-brand-navy/5 md:hidden"
+      class="inline-flex items-center justify-center rounded-control p-2 text-brand-navy hover:bg-brand-navy/5 dark:text-white dark:hover:bg-white/10"
       [attr.aria-expanded]="menuOpen()"
       aria-controls="mobile-menu"
       aria-label="Abrir menú de navegación"
@@ -41,23 +44,24 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
       </svg>
     </button>
+    </div>
   </nav>
 
-  <div id="mobile-menu" *ngIf="menuOpen()" class="border-t border-brand-navy/10 md:hidden">
+  <div id="mobile-menu" *ngIf="menuOpen()" class="border-t border-brand-navy/10 dark:border-white/10 md:hidden">
     <ul class="space-y-1 px-4 py-3">
       <li *ngFor="let item of navItems">
         <a
           [routerLink]="item.path"
           routerLinkActive="text-brand-blue bg-brand-blue/5"
           [routerLinkActiveOptions]="{ exact: item.path === '/' }"
-          class="block rounded-control px-3 py-2 text-sm font-medium text-brand-navy hover:bg-brand-navy/5"
+          class="block rounded-control px-3 py-2 text-sm font-medium text-brand-navy hover:bg-brand-navy/5 dark:text-white dark:hover:bg-white/10"
           (click)="closeMenu()"
         >
           {{ item.label }}
         </a>
       </li>
       <li class="pt-2">
-        <a routerLink="/acceso/login" class="block rounded-control px-3 py-2 text-sm font-medium text-brand-navy hover:bg-brand-navy/5" (click)="closeMenu()">
+        <a routerLink="/acceso/login" class="block rounded-control px-3 py-2 text-sm font-medium text-brand-navy hover:bg-brand-navy/5 dark:text-white dark:hover:bg-white/10" (click)="closeMenu()">
           Iniciar sesión
         </a>
       </li>

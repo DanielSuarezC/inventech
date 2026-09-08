@@ -9,43 +9,47 @@
   </div>
 </section>
 
-<section class="mx-auto max-w-5xl px-4 py-12 sm:px-6 lg:px-8">
-  <div class="mb-10 flex items-center justify-center gap-4 rounded-card border border-brand-navy/10 bg-brand-navy/[0.03] p-4 text-sm text-brand-navy">
+<section class="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+  <div class="mb-10 flex flex-wrap items-center justify-center gap-4 rounded-card border border-brand-navy/10 bg-brand-navy/[0.03] p-4 text-sm text-brand-navy dark:border-white/10 dark:bg-white/5 dark:text-white">
     <span class="font-medium">InvenTech POS Cloud</span>
     <span aria-hidden="true">→ incluye inventario multi-bodega</span>
     <span class="text-brand-blue" aria-hidden="true">+</span>
     <span class="font-medium">InvenTech ScanPro IoT</span>
-    <span class="text-brand-gray">(requiere POS Cloud)</span>
+    <span class="text-brand-gray dark:text-white/60">(requiere POS Cloud)</span>
   </div>
 
-  <div class="grid gap-8 lg:grid-cols-2">
+  <div class="grid gap-8 lg:grid-cols-3">
     <ui-card *ngFor="let product of products">
       <div class="flex items-start justify-between gap-4">
         <div>
-          <h2 class="font-heading text-xl font-semibold text-brand-navy">{{ product.name }}</h2>
-          <p class="text-sm text-brand-gray">{{ product.tagline }}</p>
+          <h2 class="font-heading text-xl font-semibold text-brand-navy dark:text-white">{{ product.name }}</h2>
+          <p class="text-sm text-brand-gray dark:text-white/60">{{ product.tagline }}</p>
         </div>
         <ui-badge [tone]="product.standalone ? 'success' : 'info'">
           {{ product.standalone ? 'Producto independiente' : 'Requiere ecosistema' }}
         </ui-badge>
       </div>
 
-      <p class="mt-4 text-sm text-brand-navy/90">{{ product.description }}</p>
+      <p class="mt-4 text-sm text-brand-navy/90 dark:text-white/80">{{ product.description }}</p>
 
       <div *ngIf="product.dependsOn" class="mt-3 rounded-control bg-brand-blue/5 px-3 py-2 text-xs text-brand-blue">
         Depende de {{ dependencyLabel(product.dependsOn) }}: no se comercializa como producto aislado del ecosistema de software.
       </div>
 
-      <ul class="mt-4 space-y-2 text-sm text-brand-navy/90">
+      <ul class="mt-4 space-y-2 text-sm text-brand-navy/90 dark:text-white/80">
         <li *ngFor="let feature of product.features" class="flex gap-2">
           <span class="text-brand-green" aria-hidden="true">✓</span>
           <span>{{ feature }}</span>
         </li>
       </ul>
 
-      <div class="mt-6 flex items-baseline gap-1 border-t border-brand-navy/10 pt-4">
+      <p class="mt-4 flex items-center gap-1.5 text-sm font-semibold text-brand-green">
+        <span aria-hidden="true">✓</span> Instalación incluida
+      </p>
+
+      <div class="mt-4 flex items-baseline gap-1 border-t border-brand-navy/10 pt-4 dark:border-white/10">
         <span class="font-heading text-2xl font-bold text-brand-blue">{{ product.referencePrice }}</span>
-        <span class="text-sm text-brand-gray">{{ product.priceUnit }}</span>
+        <span class="text-sm text-brand-gray dark:text-white/60">{{ product.priceUnit }}</span>
         <span class="ml-auto rounded-full bg-brand-green/10 px-2.5 py-0.5 text-xs font-medium text-brand-green">SaaS</span>
       </div>
 
@@ -56,5 +60,52 @@
         Ver demostración funcional
       </a>
     </ui-card>
+
+    <!-- Plan Completo = POS Cloud + ScanPro IoT. Precio calculado dinámicamente, nunca fijo. -->
+    <div class="relative rounded-card border-2 border-brand-blue bg-white p-6 shadow-elevated transition-colors dark:bg-[#0e2740]">
+      <span class="absolute -top-3 left-6 rounded-full bg-brand-blue px-3 py-0.5 text-xs font-semibold text-white">Recomendado</span>
+
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h2 class="font-heading text-xl font-semibold text-brand-navy dark:text-white">InvenTech POS Cloud + ScanPro IoT</h2>
+          <p class="text-sm text-brand-gray dark:text-white/60">El ecosistema InvenTech completo</p>
+        </div>
+        <ui-badge tone="success">Plan Completo</ui-badge>
+      </div>
+
+      <p class="mt-4 text-sm text-brand-navy/90 dark:text-white/80">
+        La combinación de software de punto de venta e inventario en la nube con el
+        lector de códigos de barras IoT, integrados de forma nativa.
+      </p>
+
+      <ul class="mt-4 space-y-2 text-sm text-brand-navy/90 dark:text-white/80">
+        <li *ngFor="let feature of fullPlanFeatures" class="flex gap-2">
+          <span class="text-brand-green" aria-hidden="true">✓</span>
+          <span>{{ feature }}</span>
+        </li>
+      </ul>
+
+      <p class="mt-4 flex items-center gap-1.5 text-sm font-semibold text-brand-green">
+        <span aria-hidden="true">✓</span> Instalación incluida
+      </p>
+
+      <div class="mt-4 border-t border-brand-navy/10 pt-4 dark:border-white/10">
+        <div class="flex items-baseline gap-1">
+          <span class="font-heading text-2xl font-bold text-brand-blue">{{ fullPlanPrice }}</span>
+          <span class="text-sm text-brand-gray dark:text-white/60">/ mes, por sede</span>
+          <span class="ml-auto rounded-full bg-brand-green/10 px-2.5 py-0.5 text-xs font-medium text-brand-green">SaaS</span>
+        </div>
+        <p class="mt-1 text-xs text-brand-gray dark:text-white/50">
+          Precio POS Cloud + Precio ScanPro IoT = Precio Plan Completo
+        </p>
+      </div>
+
+      <a
+        routerLink="/aplicativos"
+        class="mt-4 inline-flex w-full items-center justify-center rounded-control bg-brand-blue px-4 py-2 text-sm font-medium text-white hover:bg-brand-blue/90"
+      >
+        Ver demostración funcional
+      </a>
+    </div>
   </div>
 </section>

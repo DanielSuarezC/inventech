@@ -140,27 +140,29 @@ export const SWOT: SwotItem[] = [
   { code: 'A6', category: 'amenazas', description: 'Cambios normativos relacionados con facturación y operación comercial.' },
 ];
 
-// Nota (ver docs/decisions.md D-006): los nombres de los cargos 3, 4, 6 y 7
-// provienen de una imagen del organigrama cuyo OCR resultó ilegible/ambiguo
-// en el documento fuente. No se asignan nombres inventados para esos cargos;
-// se marcan como `nameUnverified` y se muestra un rótulo de incertidumbre en
-// la UI en lugar de afirmar una identidad no confirmable. Los cargos 1, 2, 5,
-// 8, 9, 10, 11 y 12 sí están confirmados por tablas de texto explícitas del
-// documento (ficha de control del documento y tabla de portafolio/roles).
+// Nota (ver docs/decisions.md D-006, resuelto): la tabla de equipo completa y
+// la lista de socios principales fueron provistas explícitamente por el
+// usuario (orquestación 2026-09-08), sustituyendo el intento previo de OCR
+// sobre la imagen del organigrama del documento fuente, que había resultado
+// ilegible para los cargos 3, 4, 6 y 7. Los socios principales (isPartner)
+// son: Daniel Suárez, Isabel López, Gerardo Argel, Luz Mazo y Yennifer Canaval.
 export const ORG_ROLES: OrgRole[] = [
-  { order: 1, title: 'Gerente General / CEO', area: 'Dirección', responsibility: 'Dirección estratégica y representación legal de la compañía.', assignee: 'Daniel Suárez' },
-  { order: 2, title: 'Administración y Finanzas', area: 'Administración y Finanzas', responsibility: 'Gestión administrativa, financiera y contable de la empresa.', assignee: 'Isabel López' },
-  { order: 3, title: 'Contador Público', area: 'Administración y Finanzas', responsibility: 'Contabilidad y cumplimiento tributario.', assignee: 'Nombre no verificable (OCR ilegible en el organigrama fuente)', fictitious: true, nameUnverified: true },
-  { order: 4, title: 'Auxiliar Administrativo y Contable', area: 'Administración y Finanzas', responsibility: 'Soporte administrativo y contable.', assignee: 'Nombre no verificable (OCR ilegible en el organigrama fuente)', fictitious: true, nameUnverified: true },
-  { order: 5, title: 'CTO', area: 'Tecnología y Desarrollo', responsibility: 'Liderazgo técnico del desarrollo de software y hardware.', assignee: 'Gerardo Argel' },
-  { order: 6, title: 'Dev. Full Stack Senior', area: 'Tecnología y Desarrollo', responsibility: 'Desarrollo de las plataformas de software.', assignee: 'Nombre no verificable (OCR ilegible en el organigrama fuente)', fictitious: true, nameUnverified: true },
-  { order: 7, title: 'Dev. Junior / Hardware IoT', area: 'Tecnología y Desarrollo', responsibility: 'Desarrollo e integración de hardware IoT.', assignee: 'Nombre no verificable (OCR ilegible en el organigrama fuente)', fictitious: true, nameUnverified: true },
-  { order: 8, title: 'Analista QA / Tester', area: 'Tecnología y Desarrollo', responsibility: 'Realizar pruebas para garantizar la calidad y el funcionamiento del sistema.', assignee: 'Julián Restrepo', fictitious: true },
-  { order: 9, title: 'Ejecutiva Comercial', area: 'Comercial y Servicio', responsibility: 'Buscar clientes, presentar la solución y cerrar negocios.', assignee: 'Luz Mazo' },
-  { order: 10, title: 'Analista de Implementación y Capacitación', area: 'Comercial y Servicio', responsibility: 'Instalar el sistema, configurar clientes y capacitarlos.', assignee: 'Diego Herrera', fictitious: true },
-  { order: 11, title: 'Soporte Técnico', area: 'Comercial y Servicio', responsibility: 'Atender incidentes, dudas y requerimientos de los clientes.', assignee: 'Valentina Ríos', fictitious: true },
-  { order: 12, title: 'Analista de Marketing y Comunicaciones', area: 'Comercial y Servicio', responsibility: 'Gestionar redes sociales, publicidad, contenidos y posicionamiento de la marca.', assignee: 'Yennifer Canaval' },
+  { order: 1, title: 'Gerente General / Representante Legal', area: 'Dirección', responsibility: 'Dirigir la empresa, tomar decisiones estratégicas y representar legalmente a INVENTECH.', assignee: 'Daniel Suárez', isPartner: true },
+  { order: 2, title: 'Contadora Pública', area: 'Administración y Finanzas', responsibility: 'Manejar la contabilidad, obligaciones tributarias, estados financieros y control contable.', assignee: 'Isabel López', isPartner: true },
+  { order: 3, title: 'Auxiliar Administrativo y Contable', area: 'Administración y Finanzas', responsibility: 'Apoyar procesos administrativos, facturación, archivo y gestión documental.', assignee: 'Camila Torres' },
+  { order: 4, title: 'Director de Tecnología (CTO)', area: 'Tecnología y Desarrollo', responsibility: 'Dirigir la estrategia tecnológica y supervisar el desarrollo del sistema.', assignee: 'Gerardo Argel', isPartner: true },
+  { order: 5, title: 'Desarrollador Full Stack Senior', area: 'Tecnología y Desarrollo', responsibility: 'Desarrollar y mantener el backend y frontend de INVENTECH.', assignee: 'Andrés Pineda' },
+  { order: 6, title: 'Desarrollador de Software Junior', area: 'Tecnología y Desarrollo', responsibility: 'Apoyar el desarrollo de funcionalidades, correcciones e integraciones.', assignee: 'Kevin Salcedo' },
+  { order: 7, title: 'Especialista en Hardware e IoT', area: 'Tecnología y Desarrollo', responsibility: 'Diseñar, configurar y mantener lectores de código de barras y dispositivos IoT.', assignee: 'Laura Martínez' },
+  { order: 8, title: 'Analista QA / Tester', area: 'Tecnología y Desarrollo', responsibility: 'Realizar pruebas para garantizar la calidad y el funcionamiento del sistema.', assignee: 'Julián Restrepo' },
+  { order: 9, title: 'Ejecutiva Comercial', area: 'Comercial y Servicio', responsibility: 'Buscar clientes, presentar la solución y cerrar negocios.', assignee: 'Luz Mazo', isPartner: true },
+  { order: 10, title: 'Analista de Implementación y Capacitación', area: 'Comercial y Servicio', responsibility: 'Instalar el sistema, configurar clientes y capacitarlos.', assignee: 'Diego Herrera' },
+  { order: 11, title: 'Soporte Técnico', area: 'Comercial y Servicio', responsibility: 'Atender incidentes, dudas y requerimientos de los clientes.', assignee: 'Valentina Ríos' },
+  { order: 12, title: 'Analista de Marketing y Comunicaciones', area: 'Comercial y Servicio', responsibility: 'Gestionar redes sociales, publicidad, contenidos y posicionamiento de la marca.', assignee: 'Yennifer Canaval', isPartner: true },
 ];
+
+/** Socios principales, para uso en la sección "Nuestro equipo" del Home. */
+export const MAIN_PARTNERS: OrgRole[] = ORG_ROLES.filter((r) => r.isPartner);
 
 export const COMPLEMENTARY_INFO: ComplementaryInfo = {
   location:

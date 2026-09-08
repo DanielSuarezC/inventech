@@ -167,11 +167,56 @@ Los cargos 3 (Contador Público), 4 (Auxiliar Admin. y Contable), 6 (Dev. Full
 Stack Senior) y 7 (Dev. Junior/Hardware IoT) **no** tienen una fuente de texto
 confiable — solo el OCR ilegible de la imagen.
 
-**Resolución:** No se asignan nombres inventados o adivinados a esos 4 cargos.
-Se marcan explícitamente como `nameUnverified: true` en
-`core/data/company.data.ts` y la UI del organigrama muestra un rótulo de
-incertidumbre ("Nombre no verificable — OCR ilegible en el documento fuente")
-en vez de un nombre. Esto cumple la regla "NO inventar información" incluso
-cuando eso significa dejar un dato incompleto.
+**Resolución (fase 1, histórica):** No se asignaron nombres inventados o
+adivinados a esos 4 cargos. Se marcaron como `nameUnverified: true` en
+`core/data/company.data.ts` y la UI del organigrama mostraba un rótulo de
+incertidumbre en vez de un nombre. Esto cumplía la regla "NO inventar
+información" incluso cuando eso significaba dejar un dato incompleto.
 
-**Estado:** Resuelto — limitación documentada y visible en la UI.
+**Actualización (2026-09-08):** El usuario proporcionó explícitamente, en la
+instrucción de orquestación, la tabla completa de los 12 cargos con
+responsable y la lista de los 5 socios principales (Daniel Suárez, Isabel
+López, Gerardo Argel, Luz Mazo, Yennifer Canaval). Esta es ahora la fuente de
+mayor autoridad para el organigrama (instrucción directa del usuario >
+OCR de una imagen del documento). Se reemplazó `ORG_ROLES` en
+`core/data/company.data.ts` con los 12 cargos reales (incluye 4 integrantes
+nuevos: Camila Torres, Andrés Pineda, Kevin Salcedo, Laura Martínez), se
+agregó el flag `isPartner` al modelo `OrgRole` y se actualizó la UI
+(`slide-blocks.component.html`) para mostrar una etiqueta "Socio" en vez del
+rótulo de incertidumbre anterior. Los flags `fictitious`/`nameUnverified` ya
+no se usan en los datos pero se conservan en el modelo por compatibilidad de
+tipos.
+
+**Pendiente:** fotografías reales del equipo (sección 11/12 de la instrucción
+maestra) — no existen en `src/assets`; hasta que se provean, el organigrama y
+la sección "Nuestro equipo" del Home deben usar un placeholder visual
+consistente y registrar la ausencia, sin inventar fotografías.
+
+**Estado:** Resuelto — nombres verificados por instrucción directa del
+usuario; fotografías pendientes de asset real.
+
+**Actualización 2 (2026-09-08):** Se implementó `ui-avatar`
+(`src/app/shared/ui/avatar/avatar.component.ts`), el "marco de fotos"
+solicitado por el usuario: un marco circular reutilizable que muestra
+`photoUrl` cuando existe y, mientras no exista, un placeholder consistente
+con la marca (iniciales sobre el degradado azul→verde) en vez de una imagen
+genérica o inventada. Se usa en el organigrama de la presentación y en la
+sección "Nuestro equipo" del Home. Cuando el usuario suba las fotografías
+reales, basta con asignar `photoUrl` a cada `OrgRole` en `company.data.ts`
+— no se requiere cambiar la UI.
+
+---
+
+## D-007 — Número de WhatsApp
+
+**Hallazgo:** La instrucción maestra (sección 26) pedía no inventar el
+número de WhatsApp y centralizar su configuración.
+
+**Resolución:** El usuario proporcionó el número directamente
+(orquestación 2026-09-08): `3144714547` (Colombia, +57). Se centralizó en
+`src/app/core/config/whatsapp.config.ts` (`WHATSAPP_NUMBER`,
+`WHATSAPP_MESSAGE`, `buildWhatsappLink()`); el número no está duplicado en
+ningún otro archivo. Botón flotante implementado en
+`shared/ui/whatsapp-button` y montado globalmente en `ShellComponent`.
+
+**Estado:** Resuelto.
