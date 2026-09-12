@@ -40,15 +40,12 @@
         class="inline-flex items-center gap-1.5 rounded-control px-2 py-1 text-xs text-white/70 transition-colors hover:bg-white/10 hover:text-white"
         [attr.aria-label]="social.name + ': ' + social.handle"
       >
-        <span aria-hidden="true">
-          <ng-container [ngSwitch]="social.icon">
-            <span *ngSwitchCase="'instagram'">📷</span>
-            <span *ngSwitchCase="'linkedin'">💼</span>
-            <span *ngSwitchCase="'facebook'">👍</span>
-            <span *ngSwitchCase="'tiktok'">🎵</span>
-            <span *ngSwitchCase="'youtube'">▶️</span>
-          </ng-container>
-        </span>
+        <img
+          [src]="'assets/icons/' + social.icon + '.png'"
+          [alt]="social.name"
+          class="h-4 w-4"
+          aria-hidden="true"
+        />
         {{ social.handle }}
       </a>
     </div>
